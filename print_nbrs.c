@@ -1,14 +1,69 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf_utils.c                                  :+:      :+:    :+:   */
+/*   printf_nbrs.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: maclara- <maclara-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 17:55:44 by maclara-          #+#    #+#             */
-/*   Updated: 2022/09/28 18:13:07 by maclara-         ###   ########.fr       */
+/*   Updated: 2022/10/12 00:55:37 by maclara-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "libftprintf.h"
+
+static int	convert_char_int(int n)
+{
+	char	c;
+
+	c = '0';
+	c = c + n;
+	write (1, &c, 1);
+	return (1);
+}
+
+int	ft_putnbr(int n)
+{
+	int			ten;
+	long int	nb;
+	int			len;
+
+	nb = n;
+	ten = 1;
+	len = 0;
+	if (nb < 0)
+	{
+		len +=write(1, "-", 1);
+		nb = nb * -1;
+	}
+	while (ten <= nb / 10)
+		ten = ten * 10;
+	while (ten >= 1)
+	{
+		len += convert_char_int (nb / ten);
+		nb = nb - (nb / ten) * ten;
+		ten = ten / 10;
+	}
+	return (len);	
+}
+
+int	ft_put_u_nbr(unsigned int n)
+{
+	int	ten;
+	int	len;
+
+	len = 0;
+	ten = 1;
+	while (ten <= n / 10)
+		ten = ten * 10;
+	while (ten >= 1)
+	{
+		len += convert_char_int (n / ten);
+		n = n - (n / ten) * ten;
+		ten = ten / 10;
+	}
+	return (len);	
+}
 
 // Funções externas permitidas: malloc, free, write, va_start, va_arg, va_copy, va_end
 
@@ -40,9 +95,16 @@ Você tem que implementar as seguintes conversões:
 /*
 Base de apoio:
 
+https://www.geeksforgeeks.org/variadic-functions-in-c/
+
 https://iq.opengenus.org/how-printf-and-scanf-function-works-in-c-internally/
 
+Funções variadicas são funções que podem receber um número variável de argumentos, ela adiciona flexibilidade ao programa. 
+A função variádica tem um argumento fixo e, em seguida, qualquer número de argumentos pode ser passado. 
+A função variádica consiste em pelo menos uma variável fixa e depois uma reticência(…) como último parâmetro.
 
+Os valores dos argumentos passados ​​podem ser acessados ​​através do arquivo de cabeçalho denominado como:
+#include <stdarg.h>
 
 
 */
