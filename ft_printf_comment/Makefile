@@ -1,18 +1,12 @@
-SRCS	= ft_printf.c ft_printf_utils.c print_char_str.c print_nbrs.c print_hexa.c print_pt.c #aqui contém todos os nomes
- #dos arquivos que formarão a biblioteca (essa é a parte obrigatória)
+SRCS	= ft_printf.c ft_printf_utils.c print_char_str.c print_nbrs.c print_hexa.c print_pt.c #aqui contém 
+#todos os nomes dos arquivos que formarão a biblioteca 
 
-BONUS	=  #aqui contém todos os nomes
- #dos arquivos que formarão a parte bônus da biblioteca (essa regra é pedida nas diretrizes da tarefa)
-
-HEADERS	= ./libftprintf.h # indica que o cabeçalho está nessa mesma pasta (./), no arquivo libft.h
+HEADERS	= ./ft_printf.h # indica que o cabeçalho está nessa mesma pasta (./), no arquivo ft_printf.h
 
 OBJS	= ${SRCS:.c=.o} #os objetos serão formados por o que existe em SRCS, mantendo o nome
 # mas trocando o .c por .o
 
-BONUS_OBJS	= ${BONUS:.c=.o} #os objetos aqui serão formados por o que existe em BONUS, mantendo 
-#o nome mas trocando o .c por .o
-
-NAME	= libftprintf.a   # o nome para a biblioteca criada será libft.a
+NAME	= libftprintf.a   # o nome para a biblioteca criada será libftprintf.a
 
 RM	= rm -f # para remover, usaremos rm com -f (force), ignora ficheiros e argumentos inexistentes
 
@@ -23,22 +17,15 @@ RM	= rm -f # para remover, usaremos rm com -f (force), ignora ficheiros e argume
 # -Wall -Wextra -Werror, possibilita os avisos
 # -c a opção diz para não executar o linker, então ela forma os .o, objetos produzidos pelo assembler.
 # $< pega o que está a direita da regra, no caso .c e passa para a esquerda
-# -I inclui os que está contido em HEADERS (no caso a libft.a) (mas só se está em outra pasta)
 # -o orienta o output ${<:.c=.o} esse padrão indica que mantém-se os nomes apenas trocando .c para .o
 # o @ não deixa a regra aparecer na linha de comando quando o make estiver rodando
 # -Wall -Wextra -Werror
-	gcc -g -c $< -o ${<:.c=.o} 
+	clang -Wall -Wextra -Werror  -g -c $< -o ${<:.c=.o} 
 
 all: ${NAME} # all: É o nome das regras a serem executadas
 
 ${NAME}:	${OBJS}
 	ar -rcs ${NAME} ${OBJS}
-
-bonus:	${BONUS_OBJS} # -aqui usamos os objetos presentes no bônus
-# e compactamos no mesmo arquivo (libft.a), mas com esses arquivos bônus
-# -refaz as regras da linha 39 e 46, mas trocando os ${OBJS} por ${BONUS_OBJS} 
-# o @ não deixa a regra aparecer na linha de comando quando o make estiver rodando
-	make OBJS="${BONUS_OBJS}" --no-print-directory 
 
 clean: # -Apaga os arquivos intermediários. Se você escrever make clean no terminal
 # -usamos as rediretrizes de RM para remover os objetos da srcs e os objetos do bonus

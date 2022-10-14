@@ -6,18 +6,18 @@
 /*   By: maclara- <maclara-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 17:55:53 by maclara-          #+#    #+#             */
-/*   Updated: 2022/10/13 11:35:00 by maclara-         ###   ########.fr       */
+/*   Updated: 2022/10/13 22:28:22 by maclara-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_PRINTF_H
-# define FT_PRINTF_H
+#ifndef FT_PRINTF_H // se não existir a biblioteca ft_printf.h
+# define FT_PRINTF_H // criamos aqui
 
-#include <stdarg.h>
-#include <unistd.h>
-#include <stdlib.h>
+#include <stdarg.h> // biblioteca do va_start, va_arg, va_copy, va_end
+#include <unistd.h> // para a função write
+#include <stdlib.h> // para a função malloc
 
-int		ft_putchar(char c);
+int		ft_putchar(char c); // aqui estão os protótipos das funções que compõe a biblioteca
 
 int		ft_putstr(char *str);
 
@@ -35,37 +35,4 @@ void	*ft_calloc(size_t nmemb, size_t size);
 
 int		ft_printf(const char *fmt, ...);
 
-#endif
-
-// https://petbcc.ufscar.br/stdarg/
-// Descrição da BIBLIOTECA <stdarg.h>:
-// No cabeçalho encontram-se macros e tipos extremamente úteis, no que tange a criação 
-// de funções para as quais a quantidade de argumentos não tem uma quantidade finita definida. 
-// Assim, o cabeçalho <stdarg.h> é de muita valia com tais recursos, uma vez que o planejamento 
-// de funções sem um número fixo de argumentos torna-se algo viável.
-
-// Tipos:
-// va_list: armazena os valores passados como argumento na função em que for declarado.
-// Macros:
-// va_start(va_list nTermos, ...): inicializa os n termos passado como argumento na função para 
-// a variável nTermos.
-// va_arg(va_list nTermos, tipo das variáveis passadas como argumento): percorre a lista dos argumentos na 
-// ordem em que eles foram passados.
-// va_end(va_list nTermos): deve ser chamada imediatamente antes da função em que as macros estão sendo 
-// utilizadas retornar algum valor.
-
-
-// typedef struct	s_print
-// {
-// 	va_list	args; //arg para imprimir
-// 	int		wdt; //largura 
-// 	int		prc; //precisão
-// 	int		zero; //preenchimento zero
-// 	int		pnt; // .
-// 	int		dash; // -
-// 	int		tl; // total_length (valor de retorno)
-// 	int		sign; // sinal de positivo ou negativo
-// 	int		is_zero; // é o número zero
-// 	int		perc; //%
-// 	int		sp; //sinalizador de espaço ' '
-// }	t_print;
+#endif // aqui finaliza-se as declarações da biblioteca

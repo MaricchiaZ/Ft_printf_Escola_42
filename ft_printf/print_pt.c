@@ -6,13 +6,13 @@
 /*   By: maclara- <maclara-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 01:27:59 by maclara-          #+#    #+#             */
-/*   Updated: 2022/10/13 12:52:29 by maclara-         ###   ########.fr       */
+/*   Updated: 2022/10/13 23:12:08 by maclara-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	check_len_hex(unsigned long n)
+static int	check_len_hex(unsigned long n)
 {
 	int	i;
 

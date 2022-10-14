@@ -1,33 +1,86 @@
 
-Descrição da tarefa: 
-Escreva uma biblioteca que contenha ft_printf(), a
-função que irá imitar a printf() original.
+# ft_printf 
 
-Nome do programa que devemos fazer: libftprintf.a
+### Descrição da tarefa: 
+Escreva uma biblioteca que contenha ft_printf(), a função que irá imitar a printf() original.
+
+### Nome do programa que devemos fazer: libftprintf.a
 
 Arquivos que devemos enviar: Makefile, *.h, */*.h, *.c, */*.c (e qualquer outro arquivo necessário)
 
-Funções autorizadas: malloc, free, write,
+### Funções autorizadas: malloc, free, write,\
 va_start, va_arg, va_copy, va_end
 
-LIBFT: Autorizada
+### LIBFT:\ Autorizada
 
-RETORNO: um int como tamanho da string impressa;
+### RETORNO: um int como tamanho da string impressa;
 
-O protótipo da sua função ft_printf() deve ser: 
+### O protótipo da sua função ft_printf() deve ser: \
 int	ft_printf(const char *, ...);
 
-Você tem que implementar as seguintes conversões:
-- %c imprime um único caractere.
-- %s imprime uma string (como definido pela convenção C comum).
-- %p O argumento do void * ponteiro tem que ser impresso em formato hexadecimal. 
-- %d imprime um número decimal (base 10).
-- %i imprime um número inteiro na base 10.
-- %u imprime um número decimal unsigned (base 10).
-- %x imprime um número em formato hexadecimal minúsculo (base 16) .
-- %X imprime um número em hexadecimal (base 16), no formato de letras maiúsculas.
-- %% imprime um sinal de porcentagem.
+### Você tem que implementar as seguintes conversões: \
+- %c imprime um único caractere.\
+- %s imprime uma string (como definido pela convenção C comum).\
+- %p O argumento do void * ponteiro tem que ser impresso em formato hexadecimal. \
+- %d imprime um número decimal (base 10).\
+- %i imprime um número inteiro na base 10.\
+- %u imprime um número decimal unsigned (base 10).\
+- %x imprime um número em formato hexadecimal minúsculo (base 16) .\
+- %X imprime um número em hexadecimal (base 16), no formato de letras maiúsculas.\
+- %% imprime um sinal de porcentagem.\
 
+______________________________________________________________________________________________________________
+
+## Funções Variáveis: 
+
+Em matemática e em programação de computadores, uma função variada é uma função de indefinição, ou seja,\
+ aquela que aceita um número variável de argumentos.
+
+Uma das funções variáveis mais famosas é a printf "int printf (const char *format, ...)".
+
+Para usar uma função variável podemos usar a biblioteca <stdarg.h>, nela existe a va_liste outras funções\
+que faciliram usar os parâmetros que podem ou não existir, e se existirem, podem existir em qualquer quantidade :)
+
+Aqui está uma pequena explicação das funções que iremos usar: 
+
+*va_list* - tipo usado de parâmetro para as macros da biblioteca "stdarg.h", serve para recuperar os\ 
+parâmetros adicionais da função
+
+*va_start (lista, ultimo_parametro)* - inicializa a variável do tipo lista (a va_lista) que eu criei, \
+com as infos necessárias para recuperar os parâmetros adicionais
+
+*va_arg (lista, tipo_de_dado)* - retorna o parâmetro atual contido na variável "lista" e do tipo "va_list"
+
+A lista foi inicializada e dentro dela tem todos os parâmetros que foram passados, então usaremos assim:
+'x = va_arg(lista, float);'  assim acessamos o próximo parâmetro, da lista, convertido pra float e \
+ salvamos no x;
+
+*va_end(lista)* - macro para ser utilizada na finalização da função, serve para destruir a variável \
+tipo lista e evitar problemas de memórias; 
+
+______________________________________________________________________________________________________________
+
+## Descrição da BIBLIOTECA <stdarg.h>
+
+retirado de: https://petbcc.ufscar.br/stdarg/
+
+No cabeçalho encontram-se macros e tipos extremamente úteis, no que tange a criação 
+de funções para as quais a quantidade de argumentos não tem uma quantidade finita definida. 
+Assim, o cabeçalho <stdarg.h> é de muita valia com tais recursos, uma vez que o planejamento 
+de funções sem um número fixo de argumentos torna-se algo viável.
+
+Tipos:
+va_list: armazena os valores passados como argumento na função em que for declarado.
+Macros:
+va_start(va_list nTermos, ...): inicializa os n termos passado como argumento na função para 
+a variável nTermos.
+va_arg(va_list nTermos, tipo das variáveis passadas como argumento): percorre a lista dos argumentos na 
+ordem em que eles foram passados.
+va_end(va_list nTermos): deve ser chamada imediatamente antes da função em que as macros estão sendo 
+utilizadas retornar algum valor.
+______________________________________________________________________________________________________________
+
+## A função printf original: 
 
 Aqui está a versão GNU de printf... você pode vê-la passando stdoutpara vfprintf:
 
@@ -42,89 +95,3 @@ __printf (const char *format, ...)
 
    return done;
 }
-
-
-
-
-Um exemplo é retirado do livro "Linguagem C". Livro escrito por Brian Kernighan e Dennis Ritchie. Lá você encontrará explicações detalhadas da linguagem C e outras funções padrão.
-
-#include <stdarg.h>
-
-void minprintf(char *fmt,...)
-{
-    va_list ap; 
-    char *p, *sval;
-    int ival;
-    double dval;
-
-    va_start(ap, fmt);
-    for(p = fmt; *p; p++) {
-        if(*p != '%') {
-            putchar(*p);
-            continue;
-        }
-        switch (*++p) {
-            case 'd':
-                ival = va_arg(ap, int);
-                printf("%d", ival );
-                break;
-            case 'f':
-                dval  = va_arg(ap, double);
-                printf("%f", dval);
-                break;
-            case 's':
-                for(sval = va_arg(ap, char *); *sval; sval++)
-                    putchar(*sval);
-                break;
-            default:
-                putchar(*p);
-                break;
-        }
-    }
-    va_end(ap); 
-}
-
-
-    _Check_return_opt_
-_CRT_STDIO_INLINE int __CRTDECL printf(
-    _In_z_ _Printf_format_string_ char const* const _Format,
-    ...)
-#if defined _NO_CRT_STDIO_INLINE
-;
-#else
-{
-    int _Result;
-    va_list _ArgList;
-    __crt_va_start(_ArgList, _Format);
-    _Result = _vfprintf_l(stdout, _Format, NULL, _ArgList);
-    __crt_va_end(_ArgList);
-    return _Result;
-}
-#endif
-
-printf
-
-
-https://github.com/torvalds/linux/blob/master/arch/x86/boot/printf.c
-
-
-
-va_list - tipo usado de parâmetro para as macros
-da i "stdarg.h", serve para recuperar os parâmetros
-adicionais da função
-
-va_start (lista, ultimo_parametro) - inicializa a variável
-do tipo lista (a va_lista) que eu criei, com as infos
-necessárias para recuperar os parâmetros adicionais
-
-va_arg (lista, tipo_de_dado) - retorna o parâmetro atual 
-contido na variável "lista" e do tipo "va_list"
-
-A lista foi inicializada e dentro dela tem todos os parâmetros
-que foram passados, então usaremos assim:
-x = va_arg(lista, float);
-pega o próximo parâmetro da lista, converte pra float e salva no x;
-
-va_end(lista) - macro para ser utilizada na finalização
-da função, serve para destruir a variável tipo lista
-e evitar problemas de memórias; 
