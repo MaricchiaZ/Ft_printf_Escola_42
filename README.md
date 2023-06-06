@@ -23,7 +23,7 @@ git clone https://github.com/MaricchiaZ/Ft_printf_Escola_42/ft_printf_comment
 ```
 2. Entre no diretório do projeto.
 ```bash
-cd ft_printf
+cd Ft_printf_Escola_42/ft_printf_comment
 ```
 3. Compile o código
 ```bash
